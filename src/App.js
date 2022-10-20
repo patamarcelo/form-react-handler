@@ -2,14 +2,18 @@ import { useState } from "react";
 import "./App.css";
 import FormInput from "./components/FormInput.component";
 
+import { addUser } from "./utils/firebase/firebase";
+
+const INITITAL_STATE = {
+	username: "",
+	email: "",
+	birthday: "",
+	password: "",
+	confirmPassword: ""
+};
+
 const App = () => {
-	const [values, setValues] = useState({
-		username: "",
-		email: "",
-		birthday: "",
-		password: "",
-		confirmPassword: ""
-	});
+	const [values, setValues] = useState(INITITAL_STATE);
 
 	const inputs = [
 		{
@@ -62,11 +66,19 @@ const App = () => {
 		}
 	];
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async e => {
 		e.preventDefault();
+		console.log(values);
+		setValues(INITITAL_STATE);
+		addUser(
+			values.username,
+			values.email,
+			values.birthday,
+			values.password
+		);
 	};
 
-	const onChange = (e) => {
+	const onChange = e => {
 		setValues({ ...values, [e.target.name]: e.target.value });
 	};
 
@@ -74,14 +86,14 @@ const App = () => {
 		<div className="app">
 			<form onSubmit={handleSubmit}>
 				<h1>Register</h1>
-				{inputs.map((input) => (
+				{inputs.map(input =>
 					<FormInput
 						key={input.id}
 						{...input}
 						value={values[input.name]}
 						onChange={onChange}
 					/>
-				))}
+				)}
 				<button>Submit</button>
 			</form>
 		</div>
