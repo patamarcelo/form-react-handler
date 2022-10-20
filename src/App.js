@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import FormInput from "./components/FormInput.component";
 
-import { addUser } from "./utils/firebase/firebase";
+import { addUser, getQuery } from "./utils/firebase/firebase";
 
 const INITITAL_STATE = {
 	username: "",
@@ -14,6 +14,7 @@ const INITITAL_STATE = {
 
 const App = () => {
 	const [values, setValues] = useState(INITITAL_STATE);
+	const [query, setQuery] = useState([]);
 
 	const inputs = [
 		{
@@ -66,7 +67,7 @@ const App = () => {
 		}
 	];
 
-	const handleSubmit = async e => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(values);
 		setValues(INITITAL_STATE);
@@ -78,25 +79,36 @@ const App = () => {
 		);
 	};
 
-	const onChange = e => {
+	const handlerQuery = async () => {
+		const query = await getQuery();
+		console.log("query", query);
+		setQuery(query);
+	};
+
+	const onChange = (e) => {
 		setValues({ ...values, [e.target.name]: e.target.value });
 	};
 
 	return (
-		<div className="app">
-			<form onSubmit={handleSubmit}>
-				<h1>Register</h1>
-				{inputs.map(input =>
-					<FormInput
-						key={input.id}
-						{...input}
-						value={values[input.name]}
-						onChange={onChange}
-					/>
-				)}
-				<button>Submit</button>
-			</form>
-		</div>
+		<>
+			<div className="app">
+				<form onSubmit={handleSubmit}>
+					<h1>Register</h1>
+					{inputs.map((input) => (
+						<FormInput
+							key={input.id}
+							{...input}
+							value={values[input.name]}
+							onChange={onChange}
+						/>
+					))}
+					<button>Submit</button>
+				</form>
+			</div>
+			<button onClick={handlerQuery}>Gerar Query</button>
+
+			{query && <h1>{JSON.stringify(query)}</h1>}
+		</>
 	);
 };
 

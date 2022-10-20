@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+import { query, orderBy, onSnapshot, getDocs } from "firebase/firestore";
+
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 const firebaseConfig = {
 	apiKey: "AIzaSyAF-DxKQ5tMSx5TO_WE18pT70WEWdrDf0s",
@@ -31,4 +33,20 @@ export const addUser = async (username, email, birthday, password) => {
 	} catch (err) {
 		console.log(err);
 	}
+};
+
+export const getQuery = async () => {
+	const q = await query(
+		collection(db, "users_register"),
+		orderBy("created", "desc")
+	);
+
+	const querySnapshot = await getDocs(q);
+	console.log(querySnapshot.docs.map((docSnapshot) => docSnapshot.data()));
+	return querySnapshot.docs.map((docSnapshot) => {
+    return {
+      data: docSnapshot.data(),
+      id: docSnapshot.id
+    }
+  });
 };
