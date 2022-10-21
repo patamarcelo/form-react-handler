@@ -44,9 +44,9 @@ export const getQuery = async () => {
 	const querySnapshot = await getDocs(q);
 	console.log(querySnapshot.docs.map((docSnapshot) => docSnapshot.data()));
 	return querySnapshot.docs.map((docSnapshot) => {
-    return {
-      data: docSnapshot.data(),
-      id: docSnapshot.id
-    }
-  });
+		return {
+			...docSnapshot.data(),
+			id: docSnapshot.id
+		};
+	});
 };

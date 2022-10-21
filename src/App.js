@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import FormInput from "./components/FormInput.component";
+import ShowData from "./components/show-data/show-data.component";
 
 import { addUser, getQuery } from "./utils/firebase/firebase";
 
@@ -77,6 +78,7 @@ const App = () => {
 			values.birthday,
 			values.password
 		);
+		e.target.reset();
 	};
 
 	const handlerQuery = async () => {
@@ -105,9 +107,10 @@ const App = () => {
 					<button>Submit</button>
 				</form>
 			</div>
-			<button onClick={handlerQuery}>Gerar Query</button>
-
-			{query && <h1>{JSON.stringify(query)}</h1>}
+			<div className="btn-container">
+				<button onClick={handlerQuery}>Gerar Query</button>
+			</div>
+			{query.length > 0  && <ShowData dataRetr={query} />}
 		</>
 	);
 };

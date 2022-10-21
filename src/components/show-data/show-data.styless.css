@@ -1,0 +1,33 @@
+.main-container{
+    background-color: rgb(173, 173, 161, 0.6);
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 10px 10px;
+    padding-left: 10px;
+}
+
+.user-info-container{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 35%;
+    border: 1px solid;
+    margin: 10px 10px;
+    padding-left: 10px;
+    margin-bottom: 40px;
+}
+
+.title{
+    margin-top: 10px;
+}
+
+.btn-container {
+    width: 50%;
+    margin: 0 auto;
+}
